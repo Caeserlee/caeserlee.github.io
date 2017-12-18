@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Caeser,825666544@QQ.com"><title>使用XPATH做HTML解析 · 李先生的产品指南</title><meta name="description" content="XPath 简介XPath 的全称是 XML Path Language，即 XML 路径语言，它是一种在结构化文档（比如 XML 和 HTML 文档）中定位信息的语言，关于 XPath 的介绍可以参考 https://www.w3.org/TR/xpath/。
+语法HTML 实例文档后面我们将以下"><meta name="keywords" content="Hexo,HTML,CSS,android,Linux"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">李先生的产品指南</a></h3><div class="description"><p>宠辱不惊, 看庭前花开花落.</p></div></div></div><ul class="social-links"><li><a href="http://github.com/Caeserlee/caeserlee.github.io"><i class="fa fa-github"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a onclick="window.history.go(-1)" class="fa fa-chevron-left"> </a></li></div><div class="avatar"><img src="/images/favicon.jpg"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>使用XPATH做HTML解析</a></h3></div><div class="post-content"><h4 id="XPath-简介"><a href="#XPath-简介" class="headerlink" title="XPath 简介"></a>XPath 简介</h4><p><a href="https://www.w3.org/TR/xpath/" target="_blank" rel="noopener">XPath</a> 的全称是 XML Path Language，即 XML 路径语言，它是一种在结构化文档（比如 XML 和 HTML 文档）中定位信息的语言，关于 XPath 的介绍可以参考 <a href="https://www.w3.org/TR/xpath/%E3%80%82" target="_blank" rel="noopener">https://www.w3.org/TR/xpath/。</a></p>
+<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><h5 id="HTML-实例文档"><a href="#HTML-实例文档" class="headerlink" title="HTML 实例文档"></a>HTML 实例文档</h5><p>后面我们将以下面的 HTML 文档介绍 XPath 的使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;base href=&apos;http://example.com/&apos; /&gt;</span><br><span class="line">        &lt;title&gt;Example website&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;div id=&apos;images&apos;&gt;</span><br><span class="line">            &lt;a href=&apos;image1.html&apos;&gt;Name: My image 1 &lt;br/&gt;&lt;img src=&apos;image1_thumb.jpg&apos;/&gt;&lt;/a&gt;</span><br><span class="line">            &lt;a href=&apos;image2.html&apos;&gt;Name: My image 2 &lt;br/&gt;&lt;img src=&apos;image2_thumb.jpg&apos;/&gt;&lt;/a&gt;</span><br><span class="line">            &lt;a href=&apos;image3.html&apos;&gt;Name: My image 3 &lt;br/&gt;&lt;img src=&apos;image3_thumb.jpg&apos;/&gt;&lt;/a&gt;</span><br><span class="line">            &lt;a href=&apos;image4.html&apos;&gt;Name: My image 4 &lt;br/&gt;&lt;img src=&apos;image4_thumb.jpg&apos;/&gt;&lt;/a&gt;</span><br><span class="line">            &lt;a&gt;Name: My image 5 &lt;br/&gt;&lt;img src=&apos;image5_thumb.jpg&apos;/&gt;&lt;/a&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="选取节点"><a href="#选取节点" class="headerlink" title="选取节点"></a>选取节点</h5><p>下表是 XPath 常用的语法，实例对应的是上面的 HTML 文档。</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>描述</th>
+<th>实例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nodename</td>
+<td>选取此节点的所有子节点</td>
+<td>body</td>
+<td>选取 body 元素的所有子节点</td>
+</tr>
+<tr>
+<td>/</td>
+<td>从根节点选取</td>
+<td>/html</td>
+<td>选取根元素 html</td>
+</tr>
+<tr>
+<td>//</td>
+<td>匹配选择的当前节点，不考虑位置</td>
+<td>//img</td>
+<td>选取所有 img 元素，而不管它们在文档的位置</td>
+</tr>
+<tr>
+<td>.</td>
+<td>选取当前节点</td>
+<td>./img</td>
+<td>选取当前节点下的 img 节点</td>
+</tr>
+<tr>
+<td>..</td>
+<td>选取当前节点的父节点</td>
+<td>../img</td>
+<td>选取当前节点的父节点下的 title</td>
+</tr>
+<tr>
+<td>@</td>
+<td>选取属性</td>
+<td>//a[@href=”image1.html”]</td>
+<td>选取所有 href 属性为 “image1.html” 的 a 节点</td>
+</tr>
+<tr>
+<td>@</td>
+<td>选取属性</td>
+<td>//a/@href</td>
+<td>获取所有 a 节点的 href 属性的值</td>
+</tr>
+</tbody>
+</table>
+<h5 id="谓语"><a href="#谓语" class="headerlink" title="谓语"></a>谓语</h5><blockquote>
+<p>谓语用来查找某个特定的节点或者包含某个指定的值的节点，谓语嵌在方括号中。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>路径表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>//body//a[1]</td>
+<td>选取属于 body 子元素的第一个 a 元素</td>
+</tr>
+<tr>
+<td>//body//a[last()]</td>
+<td>选取属于 body 子元素的最好一个 a 元素</td>
+</tr>
+<tr>
+<td>//a[@href]</td>
+<td>选取所有拥有名为 href 的属性的 a 元素</td>
+</tr>
+<tr>
+<td>//a[@href=’image2.html’]</td>
+<td>选取所有 href 属性等于 “image2.html” 的 a 元素</td>
+</tr>
+</tbody>
+</table>
+<h4 id="在-Python-中使用"><a href="#在-Python-中使用" class="headerlink" title="在 Python 中使用"></a>在 Python 中使用</h4><p>在 <code>python</code> 中使用 <code>XPath</code> 需要安装相应的库，这里推荐使用 <a href="http://lxml.de/" target="_blank" rel="noopener">lxml</a> 库。</p>
+<p>代码示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">from lxml import etree</span><br><span class="line"></span><br><span class="line">html = &quot;&quot;&quot;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;base href=&apos;http://example.com/&apos; /&gt;</span><br><span class="line">        &lt;title&gt;Example website&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;div id=&apos;images&apos;&gt;</span><br><span class="line">            &lt;a href=&apos;image1.html&apos;&gt;Name: My image 1 &lt;br/&gt;&lt;img src=&apos;image1_thumb.jpg&apos;/&gt;&lt;/a&gt;</span><br><span class="line">            &lt;a href=&apos;image2.html&apos;&gt;Name: My image 2 &lt;br/&gt;&lt;img src=&apos;image2_thumb.jpg&apos;/&gt;&lt;/a&gt;</span><br><span class="line">            &lt;a href=&apos;image3.html&apos;&gt;Name: My image 3 &lt;br/&gt;&lt;img src=&apos;image3_thumb.jpg&apos;/&gt;&lt;/a&gt;</span><br><span class="line">            &lt;a href=&apos;image4.html&apos;&gt;Name: My image 4 &lt;br/&gt;&lt;img src=&apos;image4_thumb.jpg&apos;/&gt;&lt;/a&gt;</span><br><span class="line">            &lt;a&gt;Name: My image 5 &lt;br/&gt;&lt;img src=&apos;image5_thumb.jpg&apos;/&gt;&lt;/a&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">page_source = etree.HTML(html.decode(&apos;utf-8&apos;))</span><br><span class="line"></span><br><span class="line">title = page_source.xpath(&quot;//title/text()&quot;)</span><br><span class="line">all_href = page_source.xpath(&quot;//a/@href&quot;)</span><br><span class="line">a_image1_text = page_source.xpath(&quot;//body//a[1]/text()&quot;)</span><br><span class="line">a_image1_src = page_source.xpath(&quot;//a[@href=&apos;image1.html&apos;]/img/@src&quot;)</span><br><span class="line">a_image3_href = page_source.xpath(&quot;//a[contains(@href, &apos;3&apos;)]/@href&quot;)</span><br><span class="line">a_last = page_source.xpath(&quot;//body//a[last()]/img/@src&quot;)</span><br><span class="line">all_img_src = page_source.xpath(&quot;//img/@src&quot;)</span><br><span class="line"></span><br><span class="line">print &quot;Title&quot;, title</span><br><span class="line">print &quot;all href&quot;, all_href</span><br><span class="line">print &quot;a_image1_text&quot;, a_image1_text</span><br><span class="line">print &quot;a_image1_src&quot;, a_image1_src</span><br><span class="line">print &apos;a_image3_href&apos;, a_image3_href</span><br><span class="line">print &quot;a_last&quot;, a_last</span><br><span class="line">print &quot;all_img_src&quot;, all_img_src</span><br></pre></td></tr></table></figure>
+<p>输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Title [&apos;Example website&apos;]</span><br><span class="line">all href [&apos;image1.html&apos;, &apos;image2.html&apos;, &apos;image3.html&apos;, &apos;image4.html&apos;]</span><br><span class="line">a_image1_text [&apos;Name: My image 1 &apos;]</span><br><span class="line">a_image1_src [&apos;image1_thumb.jpg&apos;]</span><br><span class="line">a_image3_href [&apos;image3.html&apos;]</span><br><span class="line">a_last [&apos;image5_thumb.jpg&apos;]</span><br><span class="line">all_img_src [&apos;image1_thumb.jpg&apos;, &apos;image2_thumb.jpg&apos;, &apos;image3_thumb.jpg&apos;, &apos;image4_thumb.jpg&apos;, &apos;image5_thumb.jpg&apos;]</span><br></pre></td></tr></table></figure>
+<p>要注意的是，如果 xpath() 找到了匹配的数据，返回的结果是一个数组，不管是一个还是多个，比如结果中的 <code>Title</code>。</p>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ul>
+<li><a href="https://www.w3.org/TR/xpath/" target="_blank" rel="noopener">XML Path Language (XPath)</a></li>
+<li><a href="http://lxml.de/" target="_blank" rel="noopener">lxml - Processing XML and HTML with Python</a></li>
+<li><a href="http://www.w3school.com.cn/xpath/xpath_syntax.asp" target="_blank" rel="noopener">XPath 语法</a></li>
+<li><a href="http://www.w3school.com.cn/xpath/xpath_functions.asp" target="_blank" rel="noopener">XPath、XQuery 以及 XSLT 函数</a></li>
+<li><a href="http://astraylinux.com/2014/08/21/server-xpath-pick-html/" target="_blank" rel="noopener">xpath提取HTML // Astray Linux</a></li>
+<li><a href="http://scrapy-chs.readthedocs.io/zh_CN/1.0/topics/selectors.html" target="_blank" rel="noopener">选择器(Selectors) — Scrapy 1.0.5 文档</a></li>
+</ul>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2017-12-18</span><i class="fa fa-tag"></i></div></div></div></div><div class="share"><div class="evernote"><a href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank" class="fa fa-bookmark"></a></div><div class="weibo"><a href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));" class="fa fa-weibo"></a></div><div class="twitter"><a href="http://twitter.com/home?status=,http://yoursite.com/2017/12/18/使用XPATH做HTML解析/,李先生的产品指南,使用XPATH做HTML解析,;" class="fa fa-twitter"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a role="navigation" href="/2017/12/18/为什么互联网产品的成功率这么低/" title="为什么互联网产品的成功率这么低?" class="btn">上一篇</a></li><li class="next pagbuttons"><a role="navigation" href="/2017/12/18/HEXO搭建BLOG/" title="HEXO搭建BLOG" class="btn">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
